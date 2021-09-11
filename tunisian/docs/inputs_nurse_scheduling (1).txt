@@ -1,0 +1,16 @@
+Input:
+Number of machines: M = 2
+Regular hours capacity:  Cr = 8
+Overtime capacity: Co = 2
+Overtime cost: OTCost = 100
+Number of priorities: Pr = 4;
+Number of days in the booking horizon: h=10
+Patients priorities	4	3	2	1
+The daily demand	1	3	2	3
+Wait time target	2	3	4	5
+Wait time penalty	50	50	50	50
+Number of sessions	4	5	6	7
+Number of slots in each session	{3 2 2 1}	{2 2 1 1 2}	{2 2 1 1 1 1}	{3 2 2 1 2 2 1}
+Waiting patients list	
+Number of patients already waiting of each type  	2	1	1	2
+Number of waiting days for each patient	{5 2}	{3}	{4}	{5 1}
