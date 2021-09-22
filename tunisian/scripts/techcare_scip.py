@@ -18,7 +18,7 @@ T = [1, 2, 3, 4]
 # regular capacity
 ru = {(j, t): 16 for j in J for t in T}
 # overtime capacity
-ou = {(j, t): 16 for j in J for t in T}
+ou = {(j, t): 4 for j in J for t in T}
 # overtime cost
 oc = {(j, t): 1 for j in J for t in T}
 # priority number
@@ -52,14 +52,17 @@ x, y = dict(), dict()
 for key in x_keys:
     x[key] = mdl.addVar(vtype='B', name=f'x_{key}')
 for key in y_keys:
-        y[key] = mdl.addVar(vtype='I', lb=0, name=f'y_{key}')
+    y[key] = mdl.addVar(vtype='I', lb=0, name=f'y_{key}')
 
 # Add Constraints
 # each session must take place in at most one machine and slot
-for i in I:
-    for k in sl[i]:
-        mdl.addCons(quicksum(x.get((i, j, k, t), 0) for j in J for t in T) <= 1, name='sessions')
+for i, k in tl:
+    mdl.addCons(quicksum(x[i, j, k, t] for j in J for t in tl[i, k]) <= 1, name='sm')
 # at most one session per day
+for i in I:
+    for t in T:
+        mdl.addCons(quicksum(x[i, j, k, t] for j in J for k in sl[i] if t in tl[i, k]) <= 1, name='s')
+        # mdl.addCons(quicksum(x.get((i, j, k, t), 0) for j in J for k in sl[i]) <= 1, name='s')
 # Todo: implement the remaining constraints
 
 # Set the objective function
